@@ -38,8 +38,7 @@ Manage the Mac OS X user defaults(1) system. The parameters to the resource are 
 
 The current version cannot handle plists or dictionaries.
 
-Example Usage
-=============
+### Examples
 
 Simple example that uses the `com.apple.systempreferences` domain, with a single key and value.
 
@@ -97,6 +96,78 @@ This setting requires privileged access to modify, so tell it to use sudo. Note 
       value "1"
       sudo true
     end
+
+mac\_os\_x\_plist\_file
+----
+
+Manages the property list (plist) preferences file with the `cookbook_file` Chef resource. Files will be dropped in `Library/Preferences` under the home directory of the user running Chef.
+
+### Actions
+
+- :create: create the file. Default.
+
+### Attribute Parameters
+
+- source: file name to use in the files directory of the cookbook. Name attribute.
+- cookbook: cookbook where the plist file is located.
+
+### Examples
+
+Write the iTerm 2 preferences to `~/Library/Preferences/com.googlecode.iterm2.plist`.
+
+    mac_os_x_plist_file "com.googlecode.iterm2.plist"
+
+Recipes
+=======
+
+The recipes in this cookbook provide example usage of the defaults(1) LWRP, and have some useful system preference settings. They were originally based on work done in Pivotal Labs workstation management repository, though are new code given the LWRP rewrite.
+
+* https://github.com/pivotalexperimental/wschef
+
+### dock\_preferences
+
+Turns on:
+
+* auto hide
+* magnification
+
+Turns off:
+
+* animation switching workspaces
+
+Sets the tile size to really small.
+
+### finder
+
+Sets Finder save dialogs to expanded by default.
+
+### firewall
+
+Enables the OS X firewall.
+
+### kbaccess
+
+Enables keyboard access to all window controls. In other words, "Tab" will cycle focus to buttons instead of just text entry fields.
+
+### key\_repeat
+
+Set the default key repeat rate to fast and the delay to short.
+
+### screensaver
+
+Enables password protection for screensaver and sets the delay to ask for password.
+
+### time\_machine
+
+Enable time machine to backup to unsupported devices like NAS drives or AFP shares.
+
+Changes
+=======
+
+### v1.2.0:
+
+* add plist_file LWRP
+* add recipes for managing various useful user defaults
 
 License and Author
 ==================
