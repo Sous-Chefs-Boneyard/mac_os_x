@@ -23,3 +23,10 @@ mac_os_x_userdefaults "finder expanded save dialogs" do
   value "TRUE"
   global true
 end
+
+mac_os_x_userdefaults "dont show hard drives on the desktop" do
+  domain "com.apple.finder"
+  key "ShowHardDrivesOnDesktop"
+  value "false"
+  type "bool"
+end
