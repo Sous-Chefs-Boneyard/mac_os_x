@@ -37,8 +37,14 @@ end
 
 action :write do
   unless @userdefaults.is_set
-    cmd = "#{'sudo' if new_resource.sudo} defaults write #{new_resource.domain} "
-    cmd << "-g " if new_resource.global
+    cmd = "#{'sudo' if new_resource.sudo} defaults write "
+
+    if new_resource.global
+      cmd << "NSGlobalDomain "
+    else
+      cmd << new_resource.domain + ' '
+    end
+
     cmd << "'#{new_resource.key}' " if new_resource.key
 
     if new_resource.value.is_a?(TrueClass) or new_resource.value.is_a?(FalseClass)
