@@ -39,9 +39,9 @@ action :write do
   unless @userdefaults.is_set
     cmd = "#{'sudo' if new_resource.sudo} defaults write #{new_resource.domain} "
     cmd << "-g " if new_resource.global
-    cmd << "#{new_resource.key} " if new_resource.key
+    cmd << "'#{new_resource.key}' " if new_resource.key
     cmd << "-#{new_resource.type} " if new_resource.type
-    cmd << new_resource.value
+    cmd << "'#{new_resource.value}'"
     execute cmd
   end
 end
