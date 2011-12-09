@@ -37,22 +37,23 @@ end
 
 action :write do
   unless @userdefaults.is_set
-    cmd = "#{'sudo' if new_resource.sudo} defaults write "
+    cmd = ["defaults write"]
+    cmd.unshift('sudo') if new_resource.sudo
 
     if new_resource.global
-      cmd << "NSGlobalDomain "
+      cmd << "NSGlobalDomain"
     else
-      cmd << new_resource.domain + ' '
+      cmd << new_resource.domain
     end
 
-    cmd << "'#{new_resource.key}' " if new_resource.key
+    cmd << "'#{new_resource.key}'" if new_resource.key
 
     if new_resource.value.is_a?(TrueClass) or new_resource.value.is_a?(FalseClass)
       type = new_resource.type || "bool"
     end
 
-    cmd << "-#{type} " if type
+    cmd << "-#{type}" if type
     cmd << "'#{new_resource.value}'"
-    execute cmd
+    execute cmd.join(' ')
   end
 end
