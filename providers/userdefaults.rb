@@ -40,7 +40,12 @@ action :write do
     cmd = "#{'sudo' if new_resource.sudo} defaults write #{new_resource.domain} "
     cmd << "-g " if new_resource.global
     cmd << "'#{new_resource.key}' " if new_resource.key
-    cmd << "-#{new_resource.type} " if new_resource.type
+
+    if new_resource.value.is_a?(TrueClass) or new_resource.value.is_a?(FalseClass)
+      type = new_resource.type || "bool"
+    end
+
+    cmd << "-#{type} " if type
     cmd << "'#{new_resource.value}'"
     execute cmd
   end
