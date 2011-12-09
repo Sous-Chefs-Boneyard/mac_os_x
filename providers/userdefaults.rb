@@ -48,9 +48,13 @@ action :write do
 
     cmd << "'#{new_resource.key}'" if new_resource.key
 
-    if new_resource.value.is_a?(TrueClass) or new_resource.value.is_a?(FalseClass)
-      type = new_resource.type || "bool"
-    end
+    type = new_resource.type
+    type ||= case new_resource.value
+             when TrueClass, FalseClass
+               'bool'
+             when Integer
+               'int'
+             end
 
     cmd << "-#{type}" if type
     cmd << "'#{new_resource.value}'"
