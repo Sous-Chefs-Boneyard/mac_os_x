@@ -1,8 +1,10 @@
 #
 # Cookbook Name:: mac_os_x
-# Recipe:: dock_preferences
+# Recipe:: screensaver
 #
-# Copyright 2011, Joshua Timberman
+# Author:: Joshua Timberman <opensource@housepub.org>
+# Copyright:: Copyright (c) 2011, Joshua Timberman
+# License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
