@@ -27,6 +27,26 @@ end
 mac_os_x_userdefaults "dont show hard drives on the desktop" do
   domain "com.apple.finder"
   key "ShowHardDrivesOnDesktop"
-  value "false"
+  value 0
   type "bool"
 end
+
+mac_os_x_userdefaults "show all files in Finder" do
+  domain "com.apple.finder"
+  key "AppleShowAllFiles"
+  value 0
+  type "bool"
+end
+
+# TODO:
+# com.apple.finder:
+# StandardViewSettings = {
+#   ExtendedListViewSettings = {
+#     showIconPreview = 0;
+#     useRelativeDates = 0;
+#   };
+#   ListViewSettings = {
+#     showIconPreview = 0;
+#     useRelativeDates = 0;
+#   };
+# }

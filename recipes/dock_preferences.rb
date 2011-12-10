@@ -32,7 +32,7 @@ end
 mac_os_x_userdefaults "com.apple.dock tile size" do
   domain "com.apple.dock"
   key "tilesize"
-  value 20
+  value "20"
   type "integer"
   notifies :run, 'execute[killall Dock]'
 end
