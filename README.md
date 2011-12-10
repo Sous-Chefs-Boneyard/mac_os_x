@@ -3,6 +3,22 @@ Description
 
 Manage Mac OS X user defaults system.
 
+Changes
+=======
+
+## v1.2.2:
+
+* tweaks to userdefaults provider by Ben Bleything. Thanks Ben!
+* ensure lion tweaks only runs on lion
+* use strings not integers
+* move mail tweaks to their own recipe
+* add mail archive hotkey
+
+## v1.2.0:
+
+* add plist_file LWRP
+* add recipes for managing various useful user defaults
+
 Requirements
 ============
 
@@ -160,14 +176,6 @@ Enables password protection for screensaver and sets the delay to ask for passwo
 ### time\_machine
 
 Enable time machine to backup to unsupported devices like NAS drives or AFP shares.
-
-Changes
-=======
-
-### v1.2.0:
-
-* add plist_file LWRP
-* add recipes for managing various useful user defaults
 
 License and Author
 ==================
