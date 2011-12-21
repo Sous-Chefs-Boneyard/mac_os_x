@@ -6,7 +6,12 @@ Manage Mac OS X user defaults system.
 Changes
 =======
 
-## v1.2.2:
+### v1.3.0:
+
+* Issue 4 - action create should set `updated_by_last_action`
+* Issue 5 - remove lockfile before updating plist
+
+### v1.2.2:
 
 * tweaks to userdefaults provider by Ben Bleything. Thanks Ben!
 * ensure lion tweaks only runs on lion
@@ -14,9 +19,9 @@ Changes
 * move mail tweaks to their own recipe
 * add mail archive hotkey
 
-## v1.2.0:
+### v1.2.0:
 
-* add plist_file LWRP
+* add `plist_file` LWRP
 * add recipes for managing various useful user defaults
 
 Requirements
