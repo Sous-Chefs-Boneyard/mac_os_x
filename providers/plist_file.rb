@@ -18,6 +18,10 @@
 #
 
 action :create do
+  file "#{ENV['HOME']}/Library/Preferences/#{new_resource.source}" do
+    action :delete
+  end
+
   cookbook_file "#{ENV['HOME']}/Library/Preferences/#{new_resource.source}" do
     source new_resource.source
     cookbook new_resource.cookbook unless new_resource.cookbook.empty?
