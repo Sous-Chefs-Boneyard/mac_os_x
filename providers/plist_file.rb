@@ -27,4 +27,5 @@ action :create do
     cookbook new_resource.cookbook unless new_resource.cookbook.empty?
     ignore_failure true
   end
+  new_resource.update_by_last_action(true)
 end
