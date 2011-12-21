@@ -6,6 +6,10 @@ Manage Mac OS X user defaults system.
 Changes
 =======
 
+### v1.3.4:
+
+* delete the *lockfile* not the *plist*
+
 ### v1.3.2:
 
 * typo in `updated_by_last_action` - http://troll.me?p=32 :)

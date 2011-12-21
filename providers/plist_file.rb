@@ -18,7 +18,7 @@
 #
 
 action :create do
-  file "#{ENV['HOME']}/Library/Preferences/#{new_resource.source}" do
+  file "#{ENV['HOME']}/Library/Preferences/#{new_resource.source}.lockfile" do
     action :delete
   end
 
