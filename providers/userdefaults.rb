@@ -49,15 +49,21 @@ action :write do
     cmd << "'#{new_resource.key}'" if new_resource.key
 
     type = new_resource.type
-    type ||= case new_resource.value
-             when TrueClass, FalseClass
-               'bool'
-             when Integer
-               'int'
-             end
+    value = "'#{new_resource.value}'"
+    case new_resource.value
+    when TrueClass, FalseClass
+      type ||= 'bool'
+    when Integer
+      type ||= 'int'
+    when Hash
+      type ||= 'dict'
+
+      # creates a string of Key1 Value1 Key2 Value2...
+      value = new_resource.value.map {|k,v| "\"#{k}\" \"#{v}\"" }.join(' ')
+    end
 
     cmd << "-#{type}" if type
-    cmd << "'#{new_resource.value}'"
+    cmd << value
     execute cmd.join(' ')
   end
 end
