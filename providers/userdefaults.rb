@@ -26,11 +26,12 @@ def load_current_resource
   @userdefaults.key(new_resource.key)
   @userdefaults.domain(new_resource.domain)
   Chef::Log.debug("Checking #{new_resource.domain} value")
-  truthy = 1 if ['TRUE','1','true'].include?(new_resource.value)
+  truefalse = 1 if ['TRUE','1','true','YES','yes'].include?(new_resource.value)
+  truefalse = 0 if ['FALSE','0','false','NO','no'].include?(new.resource.value)
   drcmd = "defaults read #{new_resource.domain} "
   drcmd << "-g " if new_resource.global
   drcmd << "#{new_resource.key} " if new_resource.key
-  v = shell_out("#{drcmd} | grep -qx '#{truthy || new_resource.value}'")
+  v = shell_out("#{drcmd} | grep -qx '#{truefalse || new_resource.value}'")
   is_set = v.exitstatus == 0 ? true : false
   @userdefaults.is_set(is_set)
 end
