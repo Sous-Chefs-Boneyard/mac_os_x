@@ -32,7 +32,8 @@ Manage the Mac OS X user defaults(1) system. The parameters to the resource are 
 - type: Value type of the preference key.
 - sudo: Set to true if the setting requires privileged access to modify. Default false.
 
-`value` settings of `1`, `TRUE` or `true` are treated as true by defaults(1), and are handled for truthiness in the provider.
+`value` settings of `1`, `TRUE`, `true`, `YES` or `yes` are treated as true by defaults(1), and are handled in the provider.
+`value` settings of `0`, `FALSE`, `false`, `NO` or `no` are treated as false by defaults (1) and are also handled by the provider.
 
 ### Limitations
 
