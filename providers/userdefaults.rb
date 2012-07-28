@@ -65,6 +65,8 @@ action :write do
 
     cmd << "-#{type}" if type
     cmd << value
-    execute cmd.join(' ')
+    execute cmd.join(' ') do
+      user new_resource.user unless new_resource.user.nil?
+    end
   end
 end
