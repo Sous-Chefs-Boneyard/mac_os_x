@@ -1,3 +1,11 @@
+## v1.4.0:
+
+* Add settings attribute and recipe to process it (great idea from Ben
+  Bleything's bootstrap)
+* Use integers instead of strings for plain numbers
+* Set resource as updated
+* Support floating point numbers
+
 ## v1.3.6:
 
 * teach userdefaults how to cope with hashes (via Ben Bleything)
