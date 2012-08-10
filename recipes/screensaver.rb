@@ -23,12 +23,12 @@ mac_os_x_userdefaults "password protected screensaver" do
   domain "com.apple.screensaver"
   key "askForPassword"
   type "int"
-  value "1"
+  value 1
 end
 
 mac_os_x_userdefaults "password protected screensaver delay" do
   domain "com.apple.screensaver"
   key "askForPasswordDelay"
   type "int"
-  value "5"
+  value 5
 end

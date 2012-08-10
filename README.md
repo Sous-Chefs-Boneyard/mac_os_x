@@ -11,6 +11,27 @@ Platform
 
 Tested on Mac OS X 10.6.8, should work on any version.
 
+Attributes
+==========
+
+* `node['mac_os_x']['settings']` - A hash of settings to apply with
+  the `mac_os_x_userdefaults` LWRP (see below), used in the
+  `mac_os_x::settings` recipe. Set up sub-attributes for each domain's
+  settings to apply. The attribute must be a hash, and must have a
+  "domain" key with the domain of the defaults setting. Each key is a
+  "key" used in the LWRP, and its value is the corresponding "value"
+
+For example, some 'dock' settings (for com.apple.dock):
+
+```ruby
+node.default['mac_os_x']['settings']['dock'] = {
+  "domain" => "com.apple.dock",
+  "no-glass" => true,
+  "autohide" => true,
+  "showhidden" => true
+}
+```
+
 Resource/Provider
 =================
 
@@ -162,11 +183,32 @@ Enables password protection for screensaver and sets the delay to ask for passwo
 
 Enable time machine to backup to unsupported devices like NAS drives or AFP shares.
 
+### settings
+
+Iterates over the `node['mac_os_x']['settings']` attribute (see
+_Attributes_ above) for domain settings to apply. The attributes file
+has commented-out settings to use for examples; this attribute is by
+default an empty hash. You are encouraged to set the attributes for
+your own nodes through a role, rather than modifying the cookbook's
+attributes file directly.
+
+Recipes above which implement specific settings through
+`mac_os_x_userdefaults` can be replaced entirely through the use of
+attributes, and may be removed in favor of this in a future release.
+
+*Assumptions*
+
+There are a couple glaring assumptions made by this recipe.
+
+* If the domain starts with `/Library/Preferences`, then sudo is set
+  to true, as that is not user writable.
+* If the domain is `NSGlobalDomain`, then global is set to true.
+
 License and Author
 ==================
 
 Author:: Joshua Timberman (<cookbooks@housepub.org>)
-Author:: Ben Bleything
+Author:: Ben Bleything (<ben@bleything.net>)
 
 Copyright 2011, Joshua Timberman
 

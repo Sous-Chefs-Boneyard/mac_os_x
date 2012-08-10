@@ -24,4 +24,5 @@ mac_os_x_userdefaults "enable OS X firewall" do
   key "globalstate"
   value "1"
   type "int"
+  sudo true
 end

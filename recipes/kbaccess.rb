@@ -20,7 +20,8 @@
 #
 
 mac_os_x_userdefaults "Full Keyboard Access to All Controls" do
-  domain "AppleKeyboardUIMode"
+  key "AppleKeyboardUIMode"
   global true
-  value "2"
+  type "int"
+  value 2
 end

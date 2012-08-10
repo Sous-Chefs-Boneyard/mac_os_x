@@ -56,6 +56,8 @@ action :write do
       type ||= 'bool'
     when Integer
       type ||= 'int'
+    when Float
+      type ||= 'float'
     when Hash
       type ||= 'dict'
 
@@ -66,5 +68,6 @@ action :write do
     cmd << "-#{type}" if type
     cmd << value
     execute cmd.join(' ')
+    new_resource.updated_by_last_action(true)
   end
 end
