@@ -1,3 +1,7 @@
+## v1.4.2:
+
+* Fix typo in `load_current_resource`
+
 ## v1.4.0:
 
 * Add settings attribute and recipe to process it (great idea from Ben
