@@ -27,7 +27,7 @@ def load_current_resource
   @userdefaults.domain(new_resource.domain)
   Chef::Log.debug("Checking #{new_resource.domain} value")
   truefalse = 1 if ['TRUE','1','true','YES','yes'].include?(new_resource.value)
-  truefalse = 0 if ['FALSE','0','false','NO','no'].include?(new.resource.value)
+  truefalse = 0 if ['FALSE','0','false','NO','no'].include?(new_resource.value)
   drcmd = "defaults read #{new_resource.domain} "
   drcmd << "-g " if new_resource.global
   drcmd << "#{new_resource.key} " if new_resource.key
@@ -58,6 +58,8 @@ action :write do
       type ||= 'bool'
     when Integer
       type ||= 'int'
+    when Float
+      type ||= 'float'
     when Hash
       type ||= 'dict'
 
@@ -70,5 +72,6 @@ action :write do
     execute cmd.join(' ') do
       user new_resource.user unless new_resource.user.nil?
     end
+    new_resource.updated_by_last_action(true)
   end
 end

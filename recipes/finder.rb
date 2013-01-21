@@ -20,23 +20,23 @@
 #
 
 mac_os_x_userdefaults "finder expanded save dialogs" do
-  domain "NSNavPanelExpandedStateForSaveMode"
+  key "NSNavPanelExpandedStateForSaveMode"
   type "bool"
-  value "TRUE"
+  value true
   global true
 end
 
 mac_os_x_userdefaults "dont show hard drives on the desktop" do
   domain "com.apple.finder"
   key "ShowHardDrivesOnDesktop"
-  value 0
+  value false
   type "bool"
 end
 
 mac_os_x_userdefaults "show all files in Finder" do
   domain "com.apple.finder"
   key "AppleShowAllFiles"
-  value 0
+  value false
   type "bool"
 end
 
