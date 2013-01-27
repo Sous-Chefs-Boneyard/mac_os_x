@@ -31,7 +31,9 @@ def load_current_resource
   drcmd = "defaults read #{new_resource.domain} "
   drcmd << "-g " if new_resource.global
   drcmd << "#{new_resource.key} " if new_resource.key
-  v = shell_out("#{drcmd} | grep -qx '#{truefalse || new_resource.value}'")
+  shell_out_opts = {}
+  shell_out_opts[:user] = new_resource.user unless new_resource.user.nil?
+  v = shell_out("#{drcmd} | grep -qx '#{truefalse || new_resource.value}'", shell_out_opts)
   is_set = v.exitstatus == 0 ? true : false
   @userdefaults.is_set(is_set)
 end
@@ -67,7 +69,9 @@ action :write do
 
     cmd << "-#{type}" if type
     cmd << value
-    execute cmd.join(' ')
+    execute cmd.join(' ') do
+      user new_resource.user unless new_resource.user.nil?
+    end
     new_resource.updated_by_last_action(true)
   end
 end
