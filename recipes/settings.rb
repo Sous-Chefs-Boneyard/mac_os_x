@@ -27,10 +27,11 @@ end
 
 node['mac_os_x']['settings'].each do |domain,settings|
   settings.each do |k,v|
-    next if k == 'domain'
+    next if %w[domain user].include?(k)
 
     mac_os_x_userdefaults "#{settings['domain']}-#{k}" do
       domain settings['domain']
+      user settings['user']
       key k
       value v
       sudo true if settings['domain'] =~ /^\/Library\/Preferences/
