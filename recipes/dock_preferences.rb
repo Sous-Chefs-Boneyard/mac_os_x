@@ -40,5 +40,6 @@ mac_os_x_userdefaults "com.apple.dock tile size" do
 end
 
 execute "killall Dock" do
+  ignore_failure true
   action :nothing
 end
