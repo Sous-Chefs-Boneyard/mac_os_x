@@ -1,15 +1,20 @@
 Description
 ===========
 
-Manage Mac OS X user defaults system.
+This cookbook has two resources for managing local user settings on OS
+X:
+
+* `mac_os_x_plist_file` - manages "`plist`" settings files for OS X applications.
+* `mac_os_x_userdefaults` - manages settings in OS X's `defaults(1)` system.
+
+This cookbook also includes a number of helper recipes.
 
 Requirements
 ============
 
-Platform
---------
+## Platform
 
-Tested on Mac OS X 10.6.8, should work on any version.
+Tested on Mac OS X 10.6.8, 10.7.2 and 10.8.3.
 
 Attributes
 ==========
@@ -39,10 +44,12 @@ node.default['mac_os_x']['settings']['dock'] = {
 Resource/Provider
 =================
 
-mac\_os\_x\_userdefaults
-----
+## mac\_os\_x\_userdefaults
 
-Manage the Mac OS X user defaults(1) system. The parameters to the resource are passed to the defaults command and the parameters follow convention of the OS X command. See the defaults(1) man page for detail on how the tool works.
+Manage the Mac OS X user defaults(1) system. The parameters to the
+resource are passed to the defaults command and the parameters follow
+convention of the OS X command. See the defaults(1) man page for
+detail on how the tool works.
 
 ### Actions
 
@@ -58,8 +65,11 @@ Manage the Mac OS X user defaults(1) system. The parameters to the resource are 
 - user: User for which to set the default.
 - sudo: Set to true if the setting requires privileged access to modify. Default false.
 
-`value` settings of `1`, `TRUE`, `true`, `YES` or `yes` are treated as true by defaults(1), and are handled in the provider.
-`value` settings of `0`, `FALSE`, `false`, `NO` or `no` are treated as false by defaults (1) and are also handled by the provider.
+`value` settings of `1`, `TRUE`, `true`, `YES` or `yes` are treated as
+true by defaults(1), and are handled in the provider.
+
+`value` settings of `0`, `FALSE`, `false`, `NO` or `no` are treated as
+false by defaults (1) and are also handled by the provider.
 
 ### Limitations
 
@@ -67,7 +77,8 @@ The current version cannot handle plists or dictionaries.
 
 ### Examples
 
-Simple example that uses the `com.apple.systempreferences` domain, with a single key and value.
+Simple example that uses the `com.apple.systempreferences` domain,
+with a single key and value.
 
     mac_os_x_userdefaults "enable time machine on unsupported volumes" do
       domain "com.apple.systempreferences"
@@ -101,7 +112,8 @@ A setting that uses an int (integer) type.
       type "int"
     end
 
-LWRP's can send notifications, so we can change the Dock, and then refresh it to take effect.
+LWRP's can send notifications, so we can change the Dock, and then
+refresh it to take effect.
 
     execute "killall Dock" do
       action :nothing
@@ -115,7 +127,9 @@ LWRP's can send notifications, so we can change the Dock, and then refresh it to
       notifies :run, "execute[killall Dock]"
     end
 
-This setting requires privileged access to modify, so tell it to use sudo. Note that this will prompt for the user password if sudo hasn't been modified for NOPASSWD.
+This setting requires privileged access to modify, so tell it to use
+sudo. Note that this will prompt for the user password if sudo hasn't
+been modified for NOPASSWD.
 
     mac_os_x_userdefaults "disable time machine normal schedule" do
       domain "/System/Library/LaunchDaemons/com.apple.backupd-auto"
@@ -124,10 +138,12 @@ This setting requires privileged access to modify, so tell it to use sudo. Note 
       sudo true
     end
 
-mac\_os\_x\_plist\_file
-----
+## mac\_os\_x\_plist\_file
 
-Manages the property list (plist) preferences file with the `cookbook_file` Chef resource. Files will be dropped in `Library/Preferences` under the home directory of the user running Chef.
+Manages the property list (plist) preferences file with the
+`cookbook_file` Chef resource. Files will be dropped in
+`Library/Preferences` under the home directory of the user running
+Chef.
 
 ### Actions
 
@@ -135,19 +151,24 @@ Manages the property list (plist) preferences file with the `cookbook_file` Chef
 
 ### Attribute Parameters
 
-- source: file name to use in the files directory of the cookbook. Name attribute.
+- source: file name to use in the files directory of the cookbook.
+  Name attribute.
 - cookbook: cookbook where the plist file is located.
 
 ### Examples
 
-Write the iTerm 2 preferences to `~/Library/Preferences/com.googlecode.iterm2.plist`.
+Write the iTerm 2 preferences to
+`~/Library/Preferences/com.googlecode.iterm2.plist`.
 
     mac_os_x_plist_file "com.googlecode.iterm2.plist"
 
 Recipes
 =======
 
-The recipes in this cookbook provide example usage of the defaults(1) LWRP, and have some useful system preference settings. They were originally based on work done in Pivotal Labs workstation management repository, though are new code given the LWRP rewrite.
+The recipes in this cookbook provide example usage of the defaults(1)
+LWRP, and have some useful system preference settings. They were
+originally based on work done in Pivotal Labs workstation management
+repository, though are new code given the LWRP rewrite.
 
 * https://github.com/pivotalexperimental/wschef
 
@@ -174,7 +195,8 @@ Enables the OS X firewall.
 
 ### kbaccess
 
-Enables keyboard access to all window controls. In other words, "Tab" will cycle focus to buttons instead of just text entry fields.
+Enables keyboard access to all window controls. In other words, "Tab"
+will cycle focus to buttons instead of just text entry fields.
 
 ### key\_repeat
 
@@ -215,10 +237,10 @@ There are a couple glaring assumptions made by this recipe.
 License and Author
 ==================
 
-Author:: Joshua Timberman (<cookbooks@housepub.org>)
-Author:: Ben Bleything (<ben@bleything.net>)
+* Author: Joshua Timberman (<cookbooks@housepub.org>)
+* Author: Ben Bleything (<ben@bleything.net>)
 
-Copyright 2011, Joshua Timberman
+* Copyright 2011-2013, Joshua Timberman
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
