@@ -14,6 +14,10 @@ Tested on Mac OS X 10.6.8, should work on any version.
 Attributes
 ==========
 
+* `node['mac_os_x']['settings_user']` - Used in the
+  `mac_os_x::settings` recipe, this specifies the user to apply settings
+  using `mac_os_x_userdefaults` LWRP. Defaults to the user currently
+  running Chef (`node['current_user']`).
 * `node['mac_os_x']['settings']` - A hash of settings to apply with
   the `mac_os_x_userdefaults` LWRP (see below), used in the
   `mac_os_x::settings` recipe. Set up sub-attributes for each domain's
@@ -192,6 +196,9 @@ has commented-out settings to use for examples; this attribute is by
 default an empty hash. You are encouraged to set the attributes for
 your own nodes through a role, rather than modifying the cookbook's
 attributes file directly.
+
+To set user defaults for a user other than the one running Chef,
+change the `node['mac_os_x']['settings_user']` attribute.
 
 Recipes above which implement specific settings through
 `mac_os_x_userdefaults` can be replaced entirely through the use of

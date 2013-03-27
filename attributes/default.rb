@@ -22,6 +22,7 @@
 # limitations under the License.
 #
 
+node.default['mac_os_x']['settings_user'] = node['current_user']
 node.default['mac_os_x']['settings'] = {}
 
 #######################################################################
