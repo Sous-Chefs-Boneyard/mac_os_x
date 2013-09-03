@@ -28,9 +28,9 @@ def load_current_resource
   Chef::Log.debug("Checking #{new_resource.domain} value")
   truefalse = 1 if [true, 'TRUE','1','true','YES','yes'].include?(new_resource.value)
   truefalse = 0 if [false, 'FALSE','0','false','NO','no'].include?(new_resource.value)
-  drcmd = "defaults read #{new_resource.domain} "
+  drcmd = "defaults read '#{new_resource.domain}' "
   drcmd << "-g " if new_resource.global
-  drcmd << "#{new_resource.key} " if new_resource.key
+  drcmd << "'#{new_resource.key}' " if new_resource.key
   shell_out_opts = {}
   shell_out_opts[:user] = new_resource.user unless new_resource.user.nil?
   v = shell_out("#{drcmd} | grep -qx '#{truefalse || new_resource.value}'", shell_out_opts)
@@ -46,7 +46,7 @@ action :write do
     if new_resource.global
       cmd << "NSGlobalDomain"
     else
-      cmd << new_resource.domain
+      cmd << "'#{new_resource.domain}'"
     end
 
     cmd << "'#{new_resource.key}'" if new_resource.key
