@@ -66,7 +66,8 @@ action :write do
       value = new_resource.value.map {|k,v| "\"#{k}\" \"#{v}\"" }.join(' ')
     when Array
       type ||= 'array'
-      value = new_resource.value.join(' ')
+      value = new_resource.value.join("' '")
+      value = "'#{value}'"
     end
 
     cmd << "-#{type}" if type
