@@ -67,10 +67,11 @@ action :write do
     when Array
       type ||= 'array'
       value = new_resource.value.join("' '")
+      value = "'#{value}'"
     end
 
     cmd << "-#{type}" if type
-    cmd << "'#{value}'"
+    cmd << "#{value}"
     execute cmd.join(' ') do
       user new_resource.user unless new_resource.user.nil?
     end
