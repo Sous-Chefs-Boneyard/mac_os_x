@@ -1,3 +1,12 @@
+## v1.4.4:
+
+* Booleans should be correctly recognized in userdefaults (#13)
+* Make it possible to set user in attributes (#14)
+* Add support for arrays (#15)
+* Put key in quotes while running defaults read command (#16)
+* Don't add '-g' to defaults read command for NSGlobalDomain (#17)
+* Complex array values break unless quoted. (#18)
+
 ## v1.4.2:
 
 * Fix typo in `load_current_resource`
