@@ -1,3 +1,7 @@
+## v1.4.6:
+
+* Add locatedb and autoupdate recipes
+
 ## v1.4.4:
 
 * Booleans should be correctly recognized in userdefaults (#13)
