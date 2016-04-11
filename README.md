@@ -113,7 +113,7 @@ A setting that uses an int (integer) type.
       type 'int'
     end
 
-Disable Screen Saver (uses '-currentHost' flag).
+Disable Screen Saver for particular user (uses '-currentHost' flag).
 
     mac_os_x_userdefaults 'Disable Screen Saver' do
       host '-currentHost'
@@ -121,6 +121,7 @@ Disable Screen Saver (uses '-currentHost' flag).
       key 'idleTime'
       type 'int'
       value 0
+      user 'username'
     end
 
 LWRP's can send notifications, so we can change the Dock, and then
