@@ -18,10 +18,10 @@
 # limitations under the License.
 #
 
-mac_os_x_userdefaults "enable autoupdates" do
-  domain "/Library/Preferences/com.apple.SoftwareUpdate"
-  key "AutomaticCheckEnabled"
-  value "1"
-  type "int"
+mac_os_x_userdefaults 'enable autoupdates' do
+  domain '/Library/Preferences/com.apple.SoftwareUpdate'
+  key 'AutomaticCheckEnabled'
+  value '1'
+  type 'int'
   sudo true
 end

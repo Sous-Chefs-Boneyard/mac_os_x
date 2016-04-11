@@ -18,6 +18,6 @@
 # limitations under the License.
 #
 
-service "com.apple.locate" do
+service 'com.apple.locate' do
   action :start
 end

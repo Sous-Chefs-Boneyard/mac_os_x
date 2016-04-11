@@ -20,70 +20,70 @@
 #
 unless node['platform_version'].to_f < 10.7
 
-  include_recipe "mac_os_x::lion_mail"
+  include_recipe 'mac_os_x::lion_mail'
 
-  execute "killall Dock" do
+  execute 'killall Dock' do
     action :nothing
   end
 
-  mac_os_x_userdefaults "Disable Launchpad gesture" do
-    domain "com.apple.dock"
-    key "showLaunchpadGestureEnabled"
-    type "bool"
+  mac_os_x_userdefaults 'Disable Launchpad gesture' do
+    domain 'com.apple.dock'
+    key 'showLaunchpadGestureEnabled'
+    type 'bool'
     value false
-    notifies :run, "execute[killall Dock]"
+    notifies :run, 'execute[killall Dock]'
   end
 
-  mac_os_x_userdefaults "Translucent hidden Dock icons" do
-    domain "com.apple.Dock"
-    key "showhidden"
+  mac_os_x_userdefaults 'Translucent hidden Dock icons' do
+    domain 'com.apple.Dock'
+    key 'showhidden'
     value true
-    type "bool"
+    type 'bool'
   end
 
-  mac_os_x_userdefaults "0 Duration for Mission Control animation" do
-    domain "com.apple.dock"
-    key "expose-animation-duration"
-    type "int"
+  mac_os_x_userdefaults '0 Duration for Mission Control animation' do
+    domain 'com.apple.dock'
+    key 'expose-animation-duration'
+    type 'int'
     value false
-    notifies :run, "execute[killall Dock]"
+    notifies :run, 'execute[killall Dock]'
   end
 
-  mac_os_x_userdefaults "Double tap switch spaces" do
-    domain "com.apple.dock"
-    key "double-tap-jump-back"
-    type "bool"
+  mac_os_x_userdefaults 'Double tap switch spaces' do
+    domain 'com.apple.dock'
+    key 'double-tap-jump-back'
+    type 'bool'
     value true
-    notifies :run, "execute[killall Dock]"
+    notifies :run, 'execute[killall Dock]'
   end
 
   mac_os_x_userdefaults "Don't automatically rearrange spaces" do
-    domain "com.apple.dock"
-    key "mru-spaces"
-    type "bool"
+    domain 'com.apple.dock'
+    key 'mru-spaces'
+    type 'bool'
     value false
-    notifies :run, "execute[killall Dock]"
+    notifies :run, 'execute[killall Dock]'
   end
 
-  mac_os_x_userdefaults "Disable Lions window animations" do
-    domain "NSGlobalDomain"
-    key "NSAutomaticWindowAnimationsEnabled"
-    type "bool"
+  mac_os_x_userdefaults 'Disable Lions window animations' do
+    domain 'NSGlobalDomain'
+    key 'NSAutomaticWindowAnimationsEnabled'
+    type 'bool'
     value false
-    only_if "defaults read NSGlobalDomain NSAutomaticWindowAnimationsEnabled"
+    only_if 'defaults read NSGlobalDomain NSAutomaticWindowAnimationsEnabled'
   end
 
-  mac_os_x_userdefaults "Disable keyboard press and hold" do
-    key "ApplePressAndHoldEnabled"
+  mac_os_x_userdefaults 'Disable keyboard press and hold' do
+    key 'ApplePressAndHoldEnabled'
     value false
     global true
   end
 
-  mac_os_x_userdefaults "Disable automatic spelling correction" do
-    domain "NSGlobalDomain"
-    key "NSAutomaticSpellingCorrectionEnabled"
+  mac_os_x_userdefaults 'Disable automatic spelling correction' do
+    domain 'NSGlobalDomain'
+    key 'NSAutomaticSpellingCorrectionEnabled'
     value false
-    type "bool"
+    type 'bool'
   end
 
   %w{WebAutomaticDashSubstitutionEnabled
@@ -93,22 +93,22 @@ unless node['platform_version'].to_f < 10.7
     mac_os_x_userdefaults "Disable #{text}" do
       key text
       value false
-      type "bool"
+      type 'bool'
       global true
     end
   end
 
-  mac_os_x_userdefaults "Disable AirDrop" do
-    domain "com.apple.NetworkBrowser"
-    key "DisableAirDrop"
+  mac_os_x_userdefaults 'Disable AirDrop' do
+    domain 'com.apple.NetworkBrowser'
+    key 'DisableAirDrop'
     value true
-    type "bool"
+    type 'bool'
   end
 
-  mac_os_x_userdefaults "Always show scrollbars" do
-    key "AppleShowScrollBars"
-    type "string"
-    value "Always"
+  mac_os_x_userdefaults 'Always show scrollbars' do
+    key 'AppleShowScrollBars'
+    type 'string'
+    value 'Always'
     global true
   end
 

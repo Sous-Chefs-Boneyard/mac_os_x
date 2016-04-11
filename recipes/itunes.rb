@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-mac_os_x_userdefaults "Search iTunes locally" do
-  domain "com.apple.iTunes"
-  key "invertStoreLinks"
+mac_os_x_userdefaults 'Search iTunes locally' do
+  domain 'com.apple.iTunes'
+  key 'invertStoreLinks'
   value true
-  type "bool"
+  type 'bool'
 end

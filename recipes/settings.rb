@@ -21,7 +21,7 @@
 # limitations under the License.
 #
 
-execute "killall Dock" do
+execute 'killall Dock' do
   action :nothing
 end
 
@@ -36,7 +36,7 @@ node['mac_os_x']['settings'].each do |domain,settings|
       value v
       sudo true if settings['domain'] =~ /^\/Library\/Preferences/
       global true if settings['domain'] =~ /^NSGlobalDomain$/
-      notifies :run, "execute[killall Dock]" if settings['domain'] =~ /^com.apple.dock$/
+      notifies :run, 'execute[killall Dock]' if settings['domain'] =~ /^com.apple.dock$/
     end
   end
 end
