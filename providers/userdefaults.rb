@@ -22,7 +22,7 @@ require 'chef/mixin/language'
 include Chef::Mixin::ShellOut
 
 def load_current_resource
-  @userdefaults = Chef::Resource::MacOsXUserdefaults.new(new_resource.name)
+  @userdefaults = Chef::Resource.resource_for_node(:mac_os_x_userdefaults, node).new(new_resource.name)
   @userdefaults.key(new_resource.key)
   @userdefaults.domain(new_resource.domain)
   Chef::Log.debug("Checking #{new_resource.domain} value")
