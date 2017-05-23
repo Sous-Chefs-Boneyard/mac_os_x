@@ -18,7 +18,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-execute "Set Mail.app Archive to cmd-Y" do
+execute 'Set Mail.app Archive to cmd-Y' do
   command "defaults write com.apple.mail NSUserKeyEquivalents -dict-add Archive '@y'"
   not_if "defaults read com.apple.mail NSUserKeyEquivalents 2>&1 | grep -q '.*Archive = \"@y\"'"
 end
@@ -26,10 +26,10 @@ end
 %w[Reply Send].each do |animation|
 
   mac_os_x_userdefaults "Disable Lions mail #{animation} animation" do
-    domain "com.apple.Mail"
+    domain 'com.apple.Mail'
     key "Disable#{animation}Animations"
-    value "yes"
-    type "bool"
+    value 'yes'
+    type 'bool'
   end
 
 end

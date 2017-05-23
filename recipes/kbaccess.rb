@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-mac_os_x_userdefaults "Full Keyboard Access to All Controls" do
-  key "AppleKeyboardUIMode"
+mac_os_x_userdefaults 'Full Keyboard Access to All Controls' do
+  key 'AppleKeyboardUIMode'
   global true
-  type "int"
+  type 'int'
   value 2
 end

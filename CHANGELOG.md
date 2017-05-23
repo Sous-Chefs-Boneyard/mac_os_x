@@ -1,3 +1,7 @@
+## v1.4.7:
+* Support for `-currentHost` flag
+* Changing double-quoted strings to single-quoted (FoodCritic's `CINK002` rule)
+
 ## v1.4.4:
 
 * Booleans should be correctly recognized in userdefaults (#13)

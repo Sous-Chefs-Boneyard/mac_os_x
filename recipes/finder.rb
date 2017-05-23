@@ -19,25 +19,25 @@
 # limitations under the License.
 #
 
-mac_os_x_userdefaults "finder expanded save dialogs" do
-  key "NSNavPanelExpandedStateForSaveMode"
-  type "bool"
+mac_os_x_userdefaults 'finder expanded save dialogs' do
+  key 'NSNavPanelExpandedStateForSaveMode'
+  type 'bool'
   value true
   global true
 end
 
-mac_os_x_userdefaults "dont show hard drives on the desktop" do
-  domain "com.apple.finder"
-  key "ShowHardDrivesOnDesktop"
+mac_os_x_userdefaults 'dont show hard drives on the desktop' do
+  domain 'com.apple.finder'
+  key 'ShowHardDrivesOnDesktop'
   value false
-  type "bool"
+  type 'bool'
 end
 
-mac_os_x_userdefaults "show all files in Finder" do
-  domain "com.apple.finder"
-  key "AppleShowAllFiles"
+mac_os_x_userdefaults 'show all files in Finder' do
+  domain 'com.apple.finder'
+  key 'AppleShowAllFiles'
   value false
-  type "bool"
+  type 'bool'
 end
 
 # TODO:

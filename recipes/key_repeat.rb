@@ -19,16 +19,16 @@
 # limitations under the License.
 #
 
-mac_os_x_userdefaults "set key repeat rate to fast" do
-  domain "~/Library/Preferences/.GlobalPreferences"
-  key "KeyRepeat"
-  type "int"
+mac_os_x_userdefaults 'set key repeat rate to fast' do
+  domain '~/Library/Preferences/.GlobalPreferences'
+  key 'KeyRepeat'
+  type 'int'
   value 2
 end
 
-mac_os_x_userdefaults "set key initial repeat delay to short" do
-  domain "~/Library/Preferences/.GlobalPreferences"
-  key "InitialKeyRepeat"
-  type "int"
+mac_os_x_userdefaults 'set key initial repeat delay to short' do
+  domain '~/Library/Preferences/.GlobalPreferences'
+  key 'InitialKeyRepeat'
+  type 'int'
   value 15
 end

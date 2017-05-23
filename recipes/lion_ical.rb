@@ -19,30 +19,30 @@
 # limitations under the License.
 #
 
-ruby_block "Backup iCal" do
+ruby_block 'Backup iCal' do
   block do
-    ::FileUtils.cp_r("/Applications/iCal.app", "/Applications/iCal-copy.app")
+    ::FileUtils.cp_r('/Applications/iCal.app', '/Applications/iCal-copy.app')
   end
-  not_if {File.directory?("/Applications/iCal-copy.app")}
+  not_if {File.directory?('/Applications/iCal-copy.app')}
 end
 
 remote_file "#{Chef::Config[:file_cache_path]}/inmdin.zip" do
-  source "https://files.me.com/eduncle/inmdin"
-  checksum "8ede2aebf5271ce44a0093aefd5bd9484c5f3c2cca07212fa415d7988ba593d2"
-  notifies :run, "execute[unzip inmdin.zip]", :immediately
+  source 'https://files.me.com/eduncle/inmdin'
+  checksum '8ede2aebf5271ce44a0093aefd5bd9484c5f3c2cca07212fa415d7988ba593d2'
+  notifies :run, 'execute[unzip inmdin.zip]', :immediately
 end
 
-execute "unzip inmdin.zip" do
+execute 'unzip inmdin.zip' do
   cwd Chef::Config[:file_cache_path]
   action :nothing
-  notifies :create, "ruby_block[Aluminum iCal]", :immediately
+  notifies :create, 'ruby_block[Aluminum iCal]', :immediately
 end
 
-ruby_block "Aluminum iCal" do
+ruby_block 'Aluminum iCal' do
   block do
-    theme_dir = "10.7-Lion-iCal-Aluminium-Skin-v2"
+    theme_dir = '10.7-Lion-iCal-Aluminium-Skin-v2'
     ::FileUtils.cp_r("#{Chef::Config[:file_cache_path]}/#{theme_dir}",
-                     "/Applications/iCal.app/Contents/Resources")
+                     '/Applications/iCal.app/Contents/Resources')
   end
   action :nothing
 end
