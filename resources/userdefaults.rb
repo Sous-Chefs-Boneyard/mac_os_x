@@ -24,7 +24,7 @@ attribute :global, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :key, :kind_of => String, :default => nil
 attribute :value, :kind_of => [Integer,Float,String,TrueClass,FalseClass,Hash,Array], :default => nil, :required => true
 attribute :type, :kind_of => String, :default => nil
-attribute :user, :kind_of => String, :default => nil
+attribute :user, :kind_of => String, :default => node['mac_os_x']['user']
 attribute :sudo, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :is_set, :kind_of => [TrueClass, FalseClass], :default => false
 
