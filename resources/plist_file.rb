@@ -1,6 +1,5 @@
 #
 # Cookbook Name:: mac_os_x
-# Provider:: plist_file
 #
 # Copyright 2011, Joshua Timberman
 #
@@ -18,11 +17,20 @@
 #
 
 actions :create
+default_action :create
 
-attribute :source, :kind_of => String, :name_attribute => true
-attribute :cookbook, :kind_of => String, :default => ""
+property :source, String, name_attribute: true
+property :cookbook, String, default: ''
 
-def initialize(*args)
-  super
-  @action = :create
+action :create do
+  file "#{ENV['HOME']}/Library/Preferences/#{new_resource.source}.lockfile" do
+    action :delete
+  end
+
+  cookbook_file "#{ENV['HOME']}/Library/Preferences/#{new_resource.source}" do
+    source new_resource.source
+    cookbook new_resource.cookbook unless new_resource.cookbook.empty?
+    ignore_failure true
+  end
+  new_resource.updated_by_last_action(true)
 end
