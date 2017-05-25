@@ -142,8 +142,8 @@ been modified for NOPASSWD.
 
 Manages the property list (plist) preferences file with the
 `cookbook_file` Chef resource. Files will be dropped in
-`Library/Preferences` under the home directory of the user running
-Chef.
+`/Library/Preferences`, or `/Users/USER/Library/Preferences`
+if the `user` property is set.
 
 ### Actions
 
