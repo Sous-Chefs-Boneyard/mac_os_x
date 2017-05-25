@@ -22,8 +22,7 @@ default_action :write
 property :domain, String, name_property: true, required: true
 property :global, [true, false], default: false
 property :key, [String, nil], default: nil
-property :value,
-  [Integer,Float,String,true,false,Hash,Array,nil], default: nil, required: true
+property :value, [Integer, Float, String, true, false, Hash, Array], required: true
 property :type, String, default: ''
 property :user, [String, nil], default: nil
 property :sudo, [true, false], default: false
