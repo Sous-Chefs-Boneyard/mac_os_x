@@ -35,12 +35,14 @@ action :write do
   Chef::Log.debug("Checking #{new_resource.domain} value")
   truefalse = 1 if [true, 'TRUE','1','true','YES','yes'].include?(new_resource.value)
   truefalse = 0 if [false, 'FALSE','0','false','NO','no'].include?(new_resource.value)
-  drcmd = "defaults read '#{new_resource.domain}' "
+
+	drcmd = "defaults read '#{new_resource.domain}' "
   drcmd << "'#{new_resource.key}' " if new_resource.key
   shell_out_opts = {}
   shell_out_opts[:user] = new_resource.user unless new_resource.user.nil?
   v = shell_out("#{drcmd} | grep -qx '#{truefalse || new_resource.value}'", shell_out_opts)
-  is_set = v.exitstatus == 0 ? true : false
+
+	is_set = v.exitstatus == 0 ? true : false
   @userdefaults.is_set(is_set)
 
   unless @userdefaults.is_set
@@ -64,9 +66,11 @@ action :write do
     end
     cmd << "-#{type}" if type
     cmd << value
+
     execute cmd.join(' ') do
       user new_resource.user unless new_resource.user.nil?
     end
+    
     new_resource.updated_by_last_action(true)
   end
 end

@@ -16,8 +16,14 @@ platforms:
         - ["~/.kitchen/cache", "/tmp/omnibus/cache", "owner: :vagrant, group: :wheel, create: true, type: :rsync"]
       gui: true
 
+verifier:
+  name: inspec
+
 suites:
   - name: default
     run_list:
       - recipe[mac_os_x::test]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
     attributes:
