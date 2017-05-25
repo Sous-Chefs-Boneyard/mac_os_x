@@ -1,6 +1,5 @@
 #
 # Cookbook Name:: mac_os_x
-# Provider:: userdefaults
 #
 # Copyright 2011, Joshua Timberman
 #
@@ -18,17 +17,70 @@
 #
 
 actions :write
+default_action :write
 
-attribute :domain, :kind_of => String, :name_attribute => true, :required => true
-attribute :global, :kind_of => [TrueClass, FalseClass], :default => false
-attribute :key, :kind_of => String, :default => nil
-attribute :value, :kind_of => [Integer,Float,String,TrueClass,FalseClass,Hash,Array], :default => nil, :required => true
-attribute :type, :kind_of => String, :default => nil
-attribute :user, :kind_of => String, :default => nil
-attribute :sudo, :kind_of => [TrueClass, FalseClass], :default => false
-attribute :is_set, :kind_of => [TrueClass, FalseClass], :default => false
+property :domain, String, name_property: true, required: true
+property :global, [true, false], default: false
+property :key, [String, nil], default: nil
+property :value,
+  [Integer,Float,String,true,false,Hash,Array,nil], default: nil, required: true
+property :type, [String, nil], default: nil
+property :user, [String, nil], default: nil
+property :sudo, [true, false], default: false
+property :is_set, [true, false], default: false
 
-def initialize(*args)
-  super
-  @action = :write
+action :write do
+  @userdefaults = Chef::Resource.resource_for_node(:mac_os_x_userdefaults, node).new(new_resource.name)
+  @userdefaults.key(new_resource.key)
+  @userdefaults.domain(new_resource.domain)
+  Chef::Log.debug("Checking #{new_resource.domain} value")
+  truefalse = 1 if [true, 'TRUE','1','true','YES','yes'].include?(new_resource.value)
+  truefalse = 0 if [false, 'FALSE','0','false','NO','no'].include?(new_resource.value)
+  drcmd = "defaults read '#{new_resource.domain}' "
+  drcmd << "'#{new_resource.key}' " if new_resource.key
+  shell_out_opts = {}
+  shell_out_opts[:user] = new_resource.user unless new_resource.user.nil?
+  v = shell_out("#{drcmd} | grep -qx '#{truefalse || new_resource.value}'", shell_out_opts)
+  is_set = v.exitstatus == 0 ? true : false
+  @userdefaults.is_set(is_set)
+
+  unless @userdefaults.is_set
+    cmd = ["defaults write"]
+    cmd.unshift('sudo') if new_resource.sudo
+
+    if new_resource.global
+      cmd << "NSGlobalDomain"
+    else
+      cmd << "'#{new_resource.domain}'"
+    end
+
+    cmd << "'#{new_resource.key}'" if new_resource.key
+
+    type = new_resource.type
+    value = "'#{new_resource.value}'"
+    case new_resource.value
+    when true, false
+      type ||= 'bool'
+    when Integer
+      type ||= 'int'
+    when Float
+      type ||= 'float'
+    when Hash
+      type ||= 'dict'
+
+      # creates a string of Key1 Value1 Key2 Value2...
+      value = new_resource.value.map {|k,v| "\"#{k}\" \"#{v}\"" }.join(' ')
+    when Array
+      type ||= 'array'
+      value = new_resource.value.join("' '")
+      value = "'#{value}'"
+    end
+
+    cmd << "-#{type}" if type
+    cmd << value
+    execute cmd.join(' ') do
+      user new_resource.user unless new_resource.user.nil?
+    end
+    new_resource.updated_by_last_action(true)
+  end
 end
