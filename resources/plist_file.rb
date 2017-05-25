@@ -26,7 +26,7 @@ property :cookbook, String, default: ''
 property :user, [String, nil], default: nil
 
 action :create do
-  new_resource.user.nil? ? home = '/' : home = "/Users/#{new_resource.user}/"
+  home = new_resource.user.nil? ? '/' : "/Users/#{new_resource.user}/"
   file "#{home}Library/Preferences/#{new_resource.source}.lockfile" do
     action :delete
   end
