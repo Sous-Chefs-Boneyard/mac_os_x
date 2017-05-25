@@ -4,5 +4,4 @@ os:
 osx_image: xcode8.3
 
 before_install:
-  - brew update
-  - brew install chefdk
+  - brew cask install chefdk
