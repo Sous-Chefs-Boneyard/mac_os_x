@@ -19,5 +19,5 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[mac_os_x::default]
+      - recipe[mac_os_x::test]
     attributes:
