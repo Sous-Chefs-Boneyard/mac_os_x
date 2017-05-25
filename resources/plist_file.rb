@@ -19,18 +19,21 @@
 actions :create
 default_action :create
 
+# This is the source from in the cookbook files directory
 property :source, String, name_attribute: true
+# The cookbook in which a source is located. Defaults to this cookbook.
 property :cookbook, String, default: ''
+property :user, [String, nil], default: nil
 
 action :create do
-  file "#{ENV['HOME']}/Library/Preferences/#{new_resource.source}.lockfile" do
+  new_resource.user.nil? ? home = '/' : home = "/Users/#{new_resource.user}/"
+  file "#{home}Library/Preferences/#{new_resource.source}.lockfile" do
     action :delete
   end
 
-  cookbook_file "#{ENV['HOME']}/Library/Preferences/#{new_resource.source}" do
+  cookbook_file "#{home}Library/Preferences/#{new_resource.source}" do
     source new_resource.source
     cookbook new_resource.cookbook unless new_resource.cookbook.empty?
-    ignore_failure true
   end
   new_resource.updated_by_last_action(true)
 end
