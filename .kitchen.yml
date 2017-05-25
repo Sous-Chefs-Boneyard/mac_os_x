@@ -1,0 +1,29 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+  # The following is option and can be set as auto (which is warn by default),
+  #   info, debug, or warn.
+  #log_level: debug
+
+platforms:
+  - name: macos-10.12
+    driver:
+      synced_folders:
+        - [".", "/vagrant", "owner: :vagrant, group: :wheel, create: true, type: :rsync"]
+        - ["~/.kitchen/cache", "/tmp/omnibus/cache", "owner: :vagrant, group: :wheel, create: true, type: :rsync"]
+      gui: true
+
+verifier:
+  name: inspec
+
+suites:
+  - name: default
+    run_list:
+      - recipe[mac_os_x::test]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    attributes:
