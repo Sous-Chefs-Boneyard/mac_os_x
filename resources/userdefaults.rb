@@ -24,7 +24,7 @@ property :global, [true, false], default: false
 property :key, [String, nil], default: nil
 property :value,
   [Integer,Float,String,true,false,Hash,Array,nil], default: nil, required: true
-property :type, [String, nil], default: nil
+property :type, String, default: ''
 property :user, [String, nil], default: nil
 property :sudo, [true, false], default: false
 property :is_set, [true, false], default: false
@@ -55,27 +55,14 @@ action :write do
     end
 
     cmd << "'#{new_resource.key}'" if new_resource.key
-
-    type = new_resource.type
-    value = "'#{new_resource.value}'"
-    case new_resource.value
-    when true, false
-      type ||= 'bool'
-    when Integer
-      type ||= 'int'
-    when Float
-      type ||= 'float'
-    when Hash
-      type ||= 'dict'
-
-      # creates a string of Key1 Value1 Key2 Value2...
-      value = new_resource.value.map {|k,v| "\"#{k}\" \"#{v}\"" }.join(' ')
-    when Array
-      type ||= 'array'
-      value = new_resource.value.join("' '")
+    value = new_resource.value
+    new_resource.type.empty? ? type = value_type(value) : type = new_resource.type
+    # creates a string of Key1 Value1 Key2 Value2...
+    value = value.map {|k,v| "\"#{k}\" \"#{v}\"" }.join(' ') if type == 'dict'
+    if type == 'array'
+      value = value.join("' '")
       value = "'#{value}'"
     end
-
     cmd << "-#{type}" if type
     cmd << value
     execute cmd.join(' ') do
