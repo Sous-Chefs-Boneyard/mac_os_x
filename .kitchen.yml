@@ -20,10 +20,18 @@ verifier:
   name: inspec
 
 suites:
-  - name: default
+  - name: plist_file
     run_list:
-      - recipe[mac_os_x::test]
+      - recipe[test::plist_file]
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/integration/plist_file
     attributes:
+  - name: userdefaults
+    run_list:
+      - recipe[test::userdefaults]
+    verifier:
+      inspec_tests:
+        - test/integration/userdefaults
+    attributes:
+
