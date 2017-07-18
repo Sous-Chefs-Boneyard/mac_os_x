@@ -26,6 +26,7 @@ property :user, String
 
 action :create do
   home = new_resource.user.nil? ? '/' : "/Users/#{new_resource.user}/"
+
   file "#{home}Library/Preferences/#{new_resource.source}.lockfile" do
     action :delete
   end

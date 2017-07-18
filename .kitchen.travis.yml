@@ -1,0 +1,22 @@
+---
+driver:
+  name: proxy
+  host: localhost
+  reset_command: "exit 0"
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: macos-10.12
+
+verifier:
+  name: inspec
+
+suites:
+  - name: plist_file
+    run_list:
+      - recipe[test::plist_file]
+  - name: userdefaults
+    run_list:
+      - recipe[test::userdefaults]

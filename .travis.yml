@@ -7,4 +7,4 @@ before_install:
   - brew cask install chefdk
 script:
   - chef exec delivery local all
-  - kitchen test
+  - KITCHEN_LOCAL_YAML=.kitchen.travis.yml /opt/chefdk/bin/kitchen test
