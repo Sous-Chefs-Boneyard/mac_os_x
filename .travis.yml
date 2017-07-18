@@ -7,3 +7,4 @@ before_install:
   - brew cask install chefdk
 script:
   - chef exec delivery local all
+  - kitchen test

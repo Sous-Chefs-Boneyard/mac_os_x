@@ -1,0 +1,9 @@
+name: os_x
+title: plist_file
+maintainer: Sous Chefs
+copyright: None
+license: Apache-2.0
+summary: Verifies mac_os_x plist_file resource
+version: 1.0.0
+# supports:
+#   - os-family: mac_os_x
