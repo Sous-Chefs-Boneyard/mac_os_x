@@ -1,7 +1,7 @@
 #
-# Cookbook Name:: mac_os_x
+# Cookbook:: mac_os_x
 #
-# Copyright 2011, Joshua Timberman
+# Copyright:: 2011-2018, Joshua Timberman
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

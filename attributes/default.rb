@@ -5,7 +5,7 @@
 # https://github.com/bleything/bootstrap/tree/master/cookbooks/config
 #
 # Author:: Joshua Timberman <opensource@housepub.org>
-# Copyright (c) 2012, Joshua Timberman
+# Copyright:: 2012-2018, Joshua Timberman
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");

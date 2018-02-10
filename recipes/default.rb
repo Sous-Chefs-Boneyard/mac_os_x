@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: mac_os_x
+# Cookbook:: mac_os_x
 # Recipe:: default
 #
 # Author:: Sous Chefs <http://sous-chefs.org/>
