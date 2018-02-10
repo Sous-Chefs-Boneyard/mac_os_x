@@ -31,30 +31,14 @@ tmtags
 .settings
 mkmf.log
 
-## COMPILED ##
-##############
-a.out
-*.o
-*.pyc
-*.so
-*.com
-*.class
-*.dll
-*.exe
-*/rdoc/
-
 # Testing #
 ###########
 .rspec
 spec/*
-spec/fixtures/*
 test/*
-features/*
-examples/*
-Procfile
+.delivery/*
 .kitchen*
 .rubocop.yml
-spec/*
 .travis.yml
 .foodcritic
 appveyor.yml
@@ -67,10 +51,6 @@ appveyor.yml
 .gitmodules
 .gitconfig
 .gitattributes
-.svn
-*/.bzr/*
-*/.hg/*
-*/.svn/*
 
 # Berkshelf #
 #############
@@ -89,4 +69,3 @@ Policyfile.lock.json
 CONTRIBUTING*
 CHANGELOG*
 TESTING*
-
