@@ -21,7 +21,7 @@ provides :mac_os_x_plist_file
 provides :macos_plist_file
 
 # This is the source from in the cookbook files directory
-property :source, String, name_attribute: true
+property :source, String, name_property: true
 # The cookbook in which a source is located. Defaults to this cookbook.
 property :cookbook, String
 property :user, String
