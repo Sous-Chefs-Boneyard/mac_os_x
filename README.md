@@ -1,247 +1,149 @@
-Description
-===========
+# mac_os_x cookbook
 
-This cookbook has two resources for managing local user settings on OS
-X:
+This cookbook includes resources for managing local user settings on macOS:
 
-* `mac_os_x_plist_file` - manages "`plist`" settings files for OS X applications.
-* `mac_os_x_userdefaults` - manages settings in OS X's `defaults(1)` system.
+- `macos_plist_file` - manages "`plist`" settings files for macOS applications.
+- `macos_userdefaults` - manages settings in macOS's `defaults(1)` system.
 
-This cookbook also includes a number of helper recipes.
+## Requirements
 
-Requirements
-============
+### Platforms
 
-## Platform
+- macOS
 
-Tested on Mac OS X 10.6.8, 10.7.2 and 10.8.3.
+### Chef
 
-Attributes
-==========
+- 12.7+
 
-* `node['mac_os_x']['settings_user']` - Used in the
-  `mac_os_x::settings` recipe, this specifies the user to apply settings
-  using `mac_os_x_userdefaults` LWRP. Defaults to the user currently
-  running Chef (`node['current_user']`).
-* `node['mac_os_x']['settings']` - A hash of settings to apply with
-  the `mac_os_x_userdefaults` LWRP (see below), used in the
-  `mac_os_x::settings` recipe. Set up sub-attributes for each domain's
-  settings to apply. The attribute must be a hash, and must have a
-  "domain" key with the domain of the defaults setting. Each key is a
-  "key" used in the LWRP, and its value is the corresponding "value"
+## Resources
 
-For example, some 'dock' settings (for com.apple.dock):
+### macos_userdefaults
 
-```ruby
-node.default['mac_os_x']['settings']['dock'] = {
-  "domain" => "com.apple.dock",
-  "no-glass" => true,
-  "autohide" => true,
-  "showhidden" => true
-}
-```
+Manage the macOS user defaults(1) system. The properties to the resource are passed to the defaults command and the parameters follow convention of the macOS command. See the defaults(1) man page for detail on how the tool works.
 
-Resource/Provider
-=================
+`note`: This resource was previously named mac_os_x_userdefaults and that name can still be used without issue.
 
-## mac\_os\_x\_userdefaults
+#### Actions
 
-Manage the Mac OS X user defaults(1) system. The parameters to the
-resource are passed to the defaults command and the parameters follow
-convention of the OS X command. See the defaults(1) man page for
-detail on how the tool works.
+- `:write`: write the setting to the specified domain. Default.
 
-### Actions
+#### Properties
 
-- :write: write the setting to the specified domain. Default.
+- `domain`: The domain the defaults belong to. Required. Name attribute.
+- `global`: Whether the domain is global. Can be true or false. Default false.
+- `key`: The preference key. Required.
+- `value`: The value of the key. Required.
+- `type`: Value type of the preference key.
+- `user`: User for which to set the default.
+- `sudo`: Set to true if the setting requires privileged access to modify. Default false.
 
-### Attribute Parameters
+`value` settings of `1`, `TRUE`, `true`, `YES` or `yes` are treated as true by defaults(1), and are handled in the provider. `value` settings of `0`, `FALSE`, `false`, `NO` or `no` are treated as false by defaults (1) and are also handled by the provider.
 
-- domain: The domain the defaults belong to. Required. Name attribute.
-- global: Whether the domain is global. Can be true or false. Default false.
-- key: The preference key. Required.
-- value: The value of the key. Required.
-- type: Value type of the preference key.
-- user: User for which to set the default.
-- sudo: Set to true if the setting requires privileged access to modify. Default false.
-
-`value` settings of `1`, `TRUE`, `true`, `YES` or `yes` are treated as
-true by defaults(1), and are handled in the provider.
-
-`value` settings of `0`, `FALSE`, `false`, `NO` or `no` are treated as
-false by defaults (1) and are also handled by the provider.
-
-### Limitations
+#### Limitations
 
 The current version cannot handle plists or dictionaries.
 
-### Examples
+#### Examples
 
-Simple example that uses the `com.apple.systempreferences` domain,
-with a single key and value.
+Simple example that uses the `com.apple.systempreferences` domain, with a single key and value.
 
-    mac_os_x_userdefaults "enable time machine on unsupported volumes" do
-      domain "com.apple.systempreferences"
-      key "TMShowUnsupportedNetworkVolumes"
-      value "1"
-    end
+```ruby
+macos_userdefaults "enable time machine on unsupported volumes" do
+  domain "com.apple.systempreferences"
+  key "TMShowUnsupportedNetworkVolumes"
+  value "1"
+end
+```
 
 Specify a global domain. Note that the key is not required for global domains.
 
-    mac_os_x_userdefaults "full keyboard access to all controls" do
-      domain "AppleKeyboardUIMode"
-      global true
-      value "2"
-    end
+```ruby
+macos_userdefaults "full keyboard access to all controls" do
+  domain "AppleKeyboardUIMode"
+  global true
+  value "2"
+end
+```
 
 A boolean type that uses truthiness (TRUE).
 
-    mac_os_x_userdefaults "finder expanded save dialogs" do
-      domain "NSNavPanelExpandedStateForSaveMode"
-      global true
-      value "TRUE"
-      type "bool"
-    end
+```ruby
+macos_userdefaults "finder expanded save dialogs" do
+  domain "NSNavPanelExpandedStateForSaveMode"
+  global true
+  value "TRUE"
+  type "bool"
+end
+```
 
 A setting that uses an int (integer) type.
 
-    mac_os_x_userdefaults "enable OS X firewall" do
-      domain "/Library/Preferences/com.apple.alf"
-      key "globalstate"
-      value "1"
-      type "int"
-    end
+```ruby
+macos_userdefaults "enable macOS firewall" do
+  domain "/Library/Preferences/com.apple.alf"
+  key "globalstate"
+  value "1"
+  type "int"
+end
+```
 
-LWRP's can send notifications, so we can change the Dock, and then
-refresh it to take effect.
+Resources can send notifications, so we can change the Dock, and then refresh it to take effect.
 
-    execute "killall Dock" do
-      action :nothing
-    end
+```ruby
+execute "killall Dock" do
+  action :nothing
+end
 
-    mac_os_x_userdefaults "set dock size" do
-      domain "com.apple.dock"
-      type "integer"
-      key "tilesize"
-      value "20"
-      notifies :run, "execute[killall Dock]"
-    end
+macos_userdefaults "set dock size" do
+  domain "com.apple.dock"
+  type "integer"
+  key "tilesize"
+  value "20"
+  notifies :run, "execute[killall Dock]"
+end
+```
 
-This setting requires privileged access to modify, so tell it to use
-sudo. Note that this will prompt for the user password if sudo hasn't
-been modified for NOPASSWD.
+This setting requires privileged access to modify, so tell it to use sudo. Note that this will prompt for the user password if sudo hasn't been modified for NOPASSWD.
 
-    mac_os_x_userdefaults "disable time machine normal schedule" do
-      domain "/System/Library/LaunchDaemons/com.apple.backupd-auto"
-      key "Disabled"
-      value "1"
-      sudo true
-    end
+```ruby
+macos_userdefaults "disable time machine normal schedule" do
+  domain "/System/Library/LaunchDaemons/com.apple.backupd-auto"
+  key "Disabled"
+  value "1"
+  sudo true
+end
+```
 
-## mac\_os\_x\_plist\_file
+### macos_plist_file
 
-Manages the property list (plist) preferences file with the
-`cookbook_file` Chef resource. Files will be dropped in
-`/Library/Preferences`, or `/Users/USER/Library/Preferences`
-if the `user` property is set.
+Manages the property list (plist) preferences file with the `cookbook_file` Chef resource. Files will be dropped in `/Library/Preferences`, or `/Users/USER/Library/Preferences` if the `user` property is set.
 
-### Actions
+`note`: This resource was previously named mac_os_x_plist_file and that name can still be used without issue.
 
-- :create: create the file. Default.
+#### Actions
 
-### Attribute Parameters
+- `:create`: create the file. Default.
 
-- source: file name to use in the files directory of the cookbook.
-  Name attribute.
-- cookbook: cookbook where the plist file is located.
+#### Properties
 
-### Examples
+- `source`: file name to use in the files directory of the cookbook. Name attribute.
+- `cookbook`: cookbook where the plist file is located.
 
-Write the iTerm 2 preferences to
-`~/Library/Preferences/com.googlecode.iterm2.plist`.
+#### Examples
 
-    mac_os_x_plist_file "com.googlecode.iterm2.plist"
+Write the iTerm 2 preferences to `~/Library/Preferences/com.googlecode.iterm2.plist`.
 
-Recipes
-=======
+```ruby
+macos_plist_file "com.googlecode.iterm2.plist"
+```
 
-The recipes in this cookbook provide example usage of the defaults(1)
-LWRP, and have some useful system preference settings. They were
-originally based on work done in Pivotal Labs workstation management
-repository, though are new code given the LWRP rewrite.
+## License and Author
 
-* https://github.com/pivotalexperimental/wschef
+- Author: Joshua Timberman ([cookbooks@housepub.org](mailto:cookbooks@housepub.org))
+- Author: Ben Bleything ([ben@bleything.net](mailto:ben@bleything.net))
+- Copyright 2011-2018, Joshua Timberman
 
-### dock\_preferences
-
-Turns on:
-
-* auto hide
-* magnification
-
-Turns off:
-
-* animation switching workspaces
-
-Sets the tile size to really small.
-
-### finder
-
-Sets Finder save dialogs to expanded by default.
-
-### firewall
-
-Enables the OS X firewall.
-
-### kbaccess
-
-Enables keyboard access to all window controls. In other words, "Tab"
-will cycle focus to buttons instead of just text entry fields.
-
-### key\_repeat
-
-Set the default key repeat rate to fast and the delay to short.
-
-### screensaver
-
-Enables password protection for screensaver and sets the delay to ask for password.
-
-### time\_machine
-
-Enable time machine to backup to unsupported devices like NAS drives or AFP shares.
-
-### settings
-
-Iterates over the `node['mac_os_x']['settings']` attribute (see
-_Attributes_ above) for domain settings to apply. The attributes file
-has commented-out settings to use for examples; this attribute is by
-default an empty hash. You are encouraged to set the attributes for
-your own nodes through a role, rather than modifying the cookbook's
-attributes file directly.
-
-To set user defaults for a user other than the one running Chef,
-change the `node['mac_os_x']['settings_user']` attribute.
-
-Recipes above which implement specific settings through
-`mac_os_x_userdefaults` can be replaced entirely through the use of
-attributes, and may be removed in favor of this in a future release.
-
-*Assumptions*
-
-There are a couple glaring assumptions made by this recipe.
-
-* If the domain starts with `/Library/Preferences`, then sudo is set
-  to true, as that is not user writable.
-* If the domain is `NSGlobalDomain`, then global is set to true.
-
-License and Author
-==================
-
-* Author: Joshua Timberman (<cookbooks@housepub.org>)
-* Author: Ben Bleything (<ben@bleything.net>)
-
-* Copyright 2011-2013, Joshua Timberman
-
+```
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -253,3 +155,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```
