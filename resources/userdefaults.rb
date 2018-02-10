@@ -25,7 +25,7 @@ property :global, [true, false], default: false
 property :key, [String, nil], default: nil
 property :value, [Integer, Float, String, true, false, Hash, Array], required: true
 property :type, String, default: ''
-property :user, [String, nil], default: nil
+property :user, String
 property :sudo, [true, false], default: false
 property :is_set, [true, false], default: false
 
