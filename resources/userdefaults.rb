@@ -1,7 +1,9 @@
 #
 # Cookbook Name:: mac_os_x
+# Resource: userdefaults
 #
 # Copyright 2011, Joshua Timberman
+# Copyright 2017, Meg Cassidy
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,15 +18,12 @@
 # limitations under the License.
 #
 
-actions :write
-default_action :write
-
-property :domain, String, name_property: true, required: true
+property :domain, String, name_property: true
 property :global, [true, false], default: false
-property :key, [String, nil], default: nil
+property :key, String
 property :value, [Integer, Float, String, true, false, Hash, Array], required: true
-property :type, String, default: ''
-property :user, [String, nil], default: nil
+property :type, [String, nil], default: nil
+property :user, String
 property :sudo, [true, false], default: false
 property :is_set, [true, false], default: false
 
@@ -56,8 +55,9 @@ action :write do
            end
 
     cmd << "'#{new_resource.key}'" if new_resource.key
+
     value = new_resource.value
-    type = new_resource.type.empty? ? value_type(value) : new_resource.type
+    type = new_resource.type.nil? ? value_type(value) : new_resource.type
     # creates a string of Key1 Value1 Key2 Value2...
     value = value.map { |k, v| "\"#{k}\" \"#{v}\"" }.join(' ') if type == 'dict'
     if type == 'array'
@@ -70,7 +70,5 @@ action :write do
     execute cmd.join(' ') do
       user new_resource.user unless new_resource.user.nil?
     end
-
-    new_resource.updated_by_last_action(true)
   end
 end

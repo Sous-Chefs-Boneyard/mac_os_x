@@ -1,7 +1,9 @@
 #
 # Cookbook Name:: mac_os_x
+# Resource: plist_file
 #
 # Copyright 2011, Joshua Timberman
+# Copyright 2017, Meg Cassidy
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,24 +18,21 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
-
 # This is the source from in the cookbook files directory
 property :source, String, name_attribute: true
 # The cookbook in which a source is located. Defaults to this cookbook.
-property :cookbook, String, default: ''
-property :user, [String, nil], default: nil
+property :cookbook, String
+property :user, String
 
 action :create do
   home = new_resource.user.nil? ? '/' : "/Users/#{new_resource.user}/"
+
   file "#{home}Library/Preferences/#{new_resource.source}.lockfile" do
     action :delete
   end
 
   cookbook_file "#{home}Library/Preferences/#{new_resource.source}" do
     source new_resource.source
-    cookbook new_resource.cookbook unless new_resource.cookbook.empty?
+    cookbook new_resource.cookbook if new_resource.cookbook
   end
-  new_resource.updated_by_last_action(true)
 end
