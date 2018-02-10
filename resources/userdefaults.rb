@@ -20,7 +20,7 @@
 provides :mac_os_x_userdefaults
 provides :macos_userdefaults
 
-property :domain, String, name_property: true, required: true
+property :domain, String, required: true
 property :global, [true, false], default: false
 property :key, [String, nil], default: nil
 property :value, [Integer, Float, String, true, false, Hash, Array], required: true
