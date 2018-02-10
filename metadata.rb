@@ -1,6 +1,6 @@
 name             'mac_os_x'
-source_url       'https://github.com/sous-chefs/mac_os_x' if respond_to?(:source_url)
-issues_url       'https://github.com/sous-chefs/mac_os_x/issues' if respond_to?(:issues_url)
+source_url       'https://github.com/sous-chefs/mac_os_x'
+issues_url       'https://github.com/sous-chefs/mac_os_x/issues'
 maintainer       'Sous Chefs'
 maintainer_email 'help@sous-chefs.org'
 license          'Apache 2.0'
