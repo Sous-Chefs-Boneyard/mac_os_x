@@ -16,9 +16,6 @@
 # limitations under the License.
 #
 
-actions :write
-default_action :write
-
 property :domain, String, name_property: true, required: true
 property :global, [true, false], default: false
 property :key, [String, nil], default: nil

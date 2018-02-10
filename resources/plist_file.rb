@@ -16,9 +16,6 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
-
 # This is the source from in the cookbook files directory
 property :source, String, name_attribute: true
 # The cookbook in which a source is located. Defaults to this cookbook.
