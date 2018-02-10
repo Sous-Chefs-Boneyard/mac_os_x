@@ -22,7 +22,7 @@ provides :macos_userdefaults
 
 property :domain, String, required: true
 property :global, [true, false], default: false
-property :key, [String, nil], default: nil
+property :key, String
 property :value, [Integer, Float, String, true, false, Hash, Array], required: true
 property :type, String, default: ''
 property :user, String
