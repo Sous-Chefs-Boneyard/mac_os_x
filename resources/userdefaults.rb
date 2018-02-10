@@ -67,7 +67,5 @@ action :write do
     execute cmd.join(' ') do
       user new_resource.user unless new_resource.user.nil?
     end
-
-    new_resource.updated_by_last_action(true)
   end
 end
