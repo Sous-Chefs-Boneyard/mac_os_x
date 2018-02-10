@@ -17,6 +17,7 @@
 #
 
 # align with apple's marketing department
+resource_name :macos_userdefaults
 provides :mac_os_x_userdefaults
 provides :macos_userdefaults
 

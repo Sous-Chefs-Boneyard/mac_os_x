@@ -17,6 +17,7 @@
 #
 
 # align with apple's marketing department
+resource_name :macos_plist_file
 provides :mac_os_x_plist_file
 provides :macos_plist_file
 
