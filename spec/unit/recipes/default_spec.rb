@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'plist_file on macOS' do
   let(:chef_run) do
-    ChefSpec::SoloRunner.new(platform: 'mac_os_x', version: '10.13',
+    ChefSpec::SoloRunner.new(platform: 'mac_os_x', version: '10.12',
                              step_into: ['mac_os_x_plist_file']).converge('test::plist_file')
   end
 
