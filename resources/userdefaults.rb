@@ -16,6 +16,10 @@
 # limitations under the License.
 #
 
+# align with apple's marketing department
+provides :mac_os_x_userdefaults
+provides :macos_userdefaults
+
 property :domain, String, name_property: true, required: true
 property :global, [true, false], default: false
 property :key, [String, nil], default: nil
@@ -26,7 +30,7 @@ property :sudo, [true, false], default: false
 property :is_set, [true, false], default: false
 
 action :write do
-  @userdefaults = Chef::Resource.resource_for_node(:mac_os_x_userdefaults, node).new(new_resource.name)
+  @userdefaults = Chef::Resource.resource_for_node(:macos_userdefaults, node).new(new_resource.name)
   @userdefaults.key(new_resource.key)
   @userdefaults.domain(new_resource.domain)
   Chef::Log.debug("Checking #{new_resource.domain} value")
