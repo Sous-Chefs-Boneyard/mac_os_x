@@ -2,8 +2,8 @@
 # Cookbook Name:: mac_os_x
 # Recipe:: default
 #
-# Author:: Joshua Timberman <opensource@housepub.org>
-# Copyright:: Copyright (c) 2011, Joshua Timberman
+# Author:: Sous Chefs <http://sous-chefs.org/>
+# Copyright:: Copyright (c) 2017, Sous Chefs
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
