@@ -1,7 +1,7 @@
 #
-# Cookbook Name:: mac_os_x
+# Cookbook:: mac_os_x
 #
-# Copyright 2011, Joshua Timberman
+# Copyright:: 2011-2018, Joshua Timberman
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,17 +16,22 @@
 # limitations under the License.
 #
 
-property :domain, String, name_property: true, required: true
+# align with apple's marketing department
+resource_name :macos_userdefaults
+provides :mac_os_x_userdefaults
+provides :macos_userdefaults
+
+property :domain, String, required: true
 property :global, [true, false], default: false
-property :key, [String, nil], default: nil
+property :key, String
 property :value, [Integer, Float, String, true, false, Hash, Array], required: true
 property :type, String, default: ''
-property :user, [String, nil], default: nil
+property :user, String
 property :sudo, [true, false], default: false
 property :is_set, [true, false], default: false
 
 action :write do
-  @userdefaults = Chef::Resource.resource_for_node(:mac_os_x_userdefaults, node).new(new_resource.name)
+  @userdefaults = Chef::Resource.resource_for_node(:macos_userdefaults, node).new(new_resource.name)
   @userdefaults.key(new_resource.key)
   @userdefaults.domain(new_resource.domain)
   Chef::Log.debug("Checking #{new_resource.domain} value")

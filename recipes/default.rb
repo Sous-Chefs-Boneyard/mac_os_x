@@ -1,9 +1,9 @@
 #
-# Cookbook Name:: mac_os_x
+# Cookbook:: mac_os_x
 # Recipe:: default
 #
 # Author:: Sous Chefs <http://sous-chefs.org/>
-# Copyright:: Copyright (c) 2017, Sous Chefs
+# Copyright:: 2017-2018, Sous Chefs
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,3 +18,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+Chef::Log.warn("The mac_os_x::default recipe contains no resources and should not be included on a node's run_list")
