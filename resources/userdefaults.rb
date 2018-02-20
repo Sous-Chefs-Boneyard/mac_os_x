@@ -39,21 +39,17 @@ def coerce_booleans(val)
   val
 end
 
-action :write do
-  @userdefaults = Chef::Resource.resource_for_node(:macos_userdefaults, node).new(new_resource.name)
-  @userdefaults.key(new_resource.key)
-  @userdefaults.domain(new_resource.domain)
-
-  drcmd = "defaults read '#{new_resource.domain}' "
-  drcmd << "'#{new_resource.key}' " if new_resource.key
+load_current_value do |desired|
+  drcmd = "defaults read '#{desired.domain}' "
+  drcmd << "'#{desired.key}' " if desired.key
   shell_out_opts = {}
-  shell_out_opts[:user] = new_resource.user unless new_resource.user.nil?
-  vc = shell_out("#{drcmd} | grep -qx '#{new_resource.value}'", shell_out_opts)
+  shell_out_opts[:user] = desired.user unless desired.user.nil?
+  vc = shell_out("#{drcmd} | grep -qx '#{desired.value}'", shell_out_opts)
+  is_set vc.exitstatus == 0 ? true : false
+end
 
-  is_set = vc.exitstatus == 0 ? true : false
-  @userdefaults.is_set(is_set)
-
-  unless @userdefaults.is_set
+action :write do
+  unless current_value.is_set
     cmd = ['defaults write']
     cmd.unshift('sudo') if new_resource.sudo
 
