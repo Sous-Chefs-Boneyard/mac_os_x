@@ -4,13 +4,6 @@ mac_os_x_userdefaults 'Disable fast user switching' do
   value 0
 end
 
-macos_userdefaults 'finder expanded save dialogs' do
-  domain 'NSNavPanelExpandedStateForSaveMode'
-  global true
-  value 'TRUE'
-  type 'bool'
-end
-
 macos_userdefaults 'enable macOS firewall' do
   domain '/Library/Preferences/com.apple.alf'
   key 'globalstate'
@@ -28,6 +21,6 @@ end
 macos_userdefaults 'disable time machine normal schedule' do
   domain '/System/Library/LaunchDaemons/com.apple.backupd-auto'
   key 'Disabled'
-  value '1'
+  value 'TRUE'
   sudo true
 end
