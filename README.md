@@ -29,7 +29,7 @@ Manage the macOS user defaults(1) system. The properties to the resource are pas
 
 #### Properties
 
-- `domain`: The domain the defaults belong to. Required. Name attribute.
+- `domain`: The domain the defaults belong to. Required.
 - `global`: Whether the domain is global. Can be true or false. Default false.
 - `key`: The preference key. Required.
 - `value`: The value of the key. Required.
