@@ -37,7 +37,7 @@ Manage the macOS user defaults(1) system. The properties to the resource are pas
 - `user`: User for which to set the default.
 - `sudo`: Set to true if the setting requires privileged access to modify. Default false.
 
-`value` settings of `1`, `TRUE`, `true`, `YES` or `yes` are treated as true by defaults(1), and are handled in the provider. `value` settings of `0`, `FALSE`, `false`, `NO` or `no` are treated as false by defaults (1) and are also handled by the provider.
+`value` settings of `1`, `TRUE`, `true`, `YES` or `yes` are treated as true by defaults(1), and are handled in the resource. `value` settings of `0`, `FALSE`, `false`, `NO` or `no` are treated as false by defaults (1) and are also handled by the resource.
 
 #### Limitations
 
