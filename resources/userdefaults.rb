@@ -31,7 +31,8 @@ property :sudo, [true, false], default: false
 property :is_set, [true, false], default: false
 
 # coerce various ways of representing a boolean into either 0 (false) or 1 (true)
-# which is what the defaults CLI expects
+# which is what the defaults CLI expects. Why? Well defaults itself accepts a few
+# different formats, but when you do a read command it all comes back as 1 or 0.
 def coerce_booleans(val)
   return 1 if [true, 'TRUE', '1', 'true', 'YES', 'yes'].include?(val)
   return 0 if [false, 'FALSE', '0', 'false', 'NO', 'no'].include?(val)
