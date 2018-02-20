@@ -55,16 +55,6 @@ macos_userdefaults "enable time machine on unsupported volumes" do
 end
 ```
 
-Specify a global domain. Note that the key is not required for global domains.
-
-```ruby
-macos_userdefaults "full keyboard access to all controls" do
-  domain "AppleKeyboardUIMode"
-  global true
-  value "2"
-end
-```
-
 A boolean type that uses truthiness (TRUE).
 
 ```ruby
